@@ -1,0 +1,113 @@
+/* 🔹 Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    background-color: #f9fafb;
+    color: #333;
+}
+
+/* 🔹 Header y navegación */
+header {
+    background: #1f2937; /* gris oscuro */
+    padding: 1rem 0;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+nav ul {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    gap: 2rem;
+}
+
+nav ul li a {
+    color: #f3f4f6;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+nav ul li a:hover {
+    color: #3b82f6; /* azul elegante */
+}
+
+/* 🔹 Títulos */
+h1, h2, h3 {
+    margin-bottom: 1rem;
+    font-weight: bold;
+    color: #1f2937;
+    text-align: center;
+}
+
+/* 🔹 Contenedor principal */
+.container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+/* 🔹 Card */
+.card {
+    background: #fff;
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.card h3 {
+    margin-bottom: 0.5rem;
+    font-size: 1.25rem;
+    color: #111827;
+}
+
+.card p {
+    color: #4b5563;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+/* 🔹 Grid de servicios */
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+/* 🔹 Imágenes dentro de cards */
+.card img {
+    border-radius: 0.5rem;
+    margin-bottom: 1rem;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+/* 🔹 Footer */
+footer {
+    text-align: center;
+    padding: 1rem;
+    margin-top: 2rem;
+    background: #1f2937;
+    color: #f3f4f6;
+    font-size: 0.9rem;
+}
+
+
+
