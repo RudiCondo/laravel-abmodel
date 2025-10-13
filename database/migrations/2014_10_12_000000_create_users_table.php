@@ -15,8 +15,12 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('telefono', 20)->nullable();       // nuevo campo
+            $table->text('direccion')->nullable();           // nuevo campo
+            $table->enum('rol', ['cliente','emprendedor','admin'])->default('cliente');
+            $table->enum('estado', ['activo','inactivo'])->default('activo'); // nuevo campo
+            $table->timestamp('ultimo_login')->nullable(); // campo opcional para último login
             $table->rememberToken();
             $table->timestamps();
         });

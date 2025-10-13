@@ -1,0 +1,35 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Carrito extends Model
+{
+    use HasFactory;
+
+    protected $primaryKey = 'id_carrito';
+
+    protected $fillable = [
+        'id_usuario'
+    ];
+
+    protected $casts = [
+        'fecha_creacion' => 'datetime',
+    ];
+
+    // Relaciones
+
+    // Un carrito pertenece a un usuario
+    public function usuario()
+    {
+        return $this->belongsTo(User::class, 'id_usuario', 'id_usuario');
+    }
+
+    // Un carrito puede tener muchos detalles de carrito
+    public function detalles()
+    {
+        return $this->hasMany(DetalleCarrito::class, 'id_carrito', 'id_carrito');
+    }
+}
