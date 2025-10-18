@@ -19,16 +19,19 @@ class Tienda extends Model
         'estado'
     ];
 
+
     protected $casts = [
-        'fecha_creacion' => 'datetime',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
     ];
+    
 
     // Relaciones
 
     // Una tienda pertenece a un usuario
     public function usuario()
     {
-        return $this->belongsTo(User::class, 'id_usuario', 'id_usuario');
+        return $this->belongsTo(User::class, 'id_usuario', 'id');
     }
 
     // Una tienda tiene muchos productos

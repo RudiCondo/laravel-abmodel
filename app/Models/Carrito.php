@@ -16,7 +16,8 @@ class Carrito extends Model
     ];
 
     protected $casts = [
-        'fecha_creacion' => 'datetime',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
     ];
 
     // Relaciones
@@ -24,7 +25,7 @@ class Carrito extends Model
     // Un carrito pertenece a un usuario
     public function usuario()
     {
-        return $this->belongsTo(User::class, 'id_usuario', 'id_usuario');
+        return $this->belongsTo(User::class, 'id_usuario', 'id');
     }
 
     // Un carrito puede tener muchos detalles de carrito

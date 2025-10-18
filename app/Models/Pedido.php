@@ -18,16 +18,14 @@ class Pedido extends Model
         'total'
     ];
 
-    protected $casts = [
-        'fecha_pedido' => 'datetime',
-    ];
+
 
     // Relaciones
 
     // Un pedido pertenece a un usuario
     public function usuario()
     {
-        return $this->belongsTo(User::class, 'id_usuario', 'id_usuario');
+        return $this->belongsTo(User::class, 'id_usuario', 'id');
     }
 
     // Un pedido puede tener muchos detalles

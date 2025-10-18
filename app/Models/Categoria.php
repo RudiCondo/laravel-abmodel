@@ -15,6 +15,11 @@ class Categoria extends Model
         'nombre_categoria',
         'descripcion'
     ];
+    
+    protected $casts = [
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+    ];
 
     // Relaciones
 
