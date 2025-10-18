@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Carrito extends Model
 {
     use HasFactory;
+    protected $table = 'carrito';
 
     protected $primaryKey = 'id_carrito';
 

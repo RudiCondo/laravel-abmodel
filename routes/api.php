@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\TiendaController;
 use App\Http\Controllers\CategoriaController;
+use App\Http\Controllers\ProductoController;
+use App\Http\Controllers\CarritoController;
 
 // ----------------- Usuarios/Clientes/Emprendedores ----------------------
 //Rutas públicas
@@ -31,4 +33,20 @@ Route::middleware('auth:api')->group(function () {
     Route::post('categorias', [CategoriaController::class, 'store']);
     Route::put('categorias/{id}', [CategoriaController::class, 'update']);
     Route::delete('categorias/{id}', [CategoriaController::class, 'destroy']);
+});
+// ---------------------- PRODUCTOS ----------------------
+Route::get('productos', [ProductoController::class, 'index']);
+Route::get('productos/{id}', [ProductoController::class, 'show']);
+Route::middleware('auth:api')->group(function () {
+    Route::post('productos', [ProductoController::class, 'store']);
+    Route::put('productos/{id}', [ProductoController::class, 'update']);
+    Route::delete('productos/{id}', [ProductoController::class, 'destroy']);
+});
+// ---------------------- CARRITO ----------------------
+Route::middleware('auth:api')->group(function () {
+    Route::get('carrito', [CarritoController::class, 'index']);
+    Route::post('carrito', [CarritoController::class, 'store']);
+    Route::post('carrito/detalle', [CarritoController::class, 'agregarProducto']);
+    Route::put('carrito/detalle/{id}', [CarritoController::class, 'actualizarDetalle']);
+    Route::delete('carrito/detalle/{id}', [CarritoController::class, 'eliminarDetalle']);
 });
