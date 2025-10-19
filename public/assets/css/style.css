@@ -1,113 +1,145 @@
-/* 🔹 Reset básico */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+:root {
+  --color-primario: hsl(37, 53%, 87%);
+  --color-secundario: #cdafe3;
+  --color-acento: #a05fa5;
+  --color-texto: #333;
+  --color-hover-texto: #fff;
+  --color-categorias-fondo: #FDECEF;
+  --fuente-principal: 'Poppins', sans-serif;
 }
 
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    line-height: 1.6;
-    background-color: #f9fafb;
-    color: #333;
+  font-family: var(--fuente-principal);
+  margin: 0;
+  padding: 0;
+  background-color: #fff;
 }
 
-/* 🔹 Header y navegación */
-header {
-    background: #1f2937; /* gris oscuro */
-    padding: 1rem 0;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    position: sticky;
-    top: 0;
-    z-index: 100;
+/* 🌟 CABECERA SUPERIOR ÚNICA */
+.header-completo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(to right, var(--color-secundario), var(--color-primario));
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid #ddd;
+  flex-wrap: wrap;
+  gap: 1rem;
 }
 
-nav ul {
-    display: flex;
-    justify-content: center;
-    list-style: none;
-    gap: 2rem;
+.header-izquierda {
+  display: flex;
+  align-items: center;
 }
 
-nav ul li a {
-    color: #f3f4f6;
-    text-decoration: none;
-    font-weight: 500;
-    transition: color 0.3s;
+.logo {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease;
 }
 
-nav ul li a:hover {
-    color: #3b82f6; /* azul elegante */
+.logo:hover {
+  transform: scale(1.05);
 }
 
-/* 🔹 Títulos */
-h1, h2, h3 {
-    margin-bottom: 1rem;
-    font-weight: bold;
-    color: #1f2937;
-    text-align: center;
+.header-centro {
+  flex: 1;
+  display: flex;
+  justify-content: center;
 }
 
-/* 🔹 Contenedor principal */
-.container {
-    max-width: 1200px;
-    margin: 2rem auto;
-    padding: 0 1rem;
+.buscador {
+  width: 100%;
+  max-width: 420px;
+  padding: 0.8rem 1rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  font-size: 1rem;
+  transition: box-shadow 0.3s ease;
 }
 
-/* 🔹 Card */
-.card {
-    background: #fff;
-    border-radius: 0.75rem;
-    padding: 1.5rem;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    transition: all 0.3s ease;
-    text-align: center;
+.buscador:focus {
+  box-shadow: 0 0 0 3px rgba(160, 95, 165, 0.2);
+  outline: none;
 }
 
-.card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+.header-derecha {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  white-space: nowrap;
 }
 
-.card h3 {
-    margin-bottom: 0.5rem;
-    font-size: 1.25rem;
-    color: #111827;
+.header-derecha a,
+.header-derecha span {
+  color: #4B2E5D;
+  font-weight: 500;
+  text-decoration: underline;
+  transition: color 0.3s ease;
 }
 
-.card p {
-    color: #4b5563;
-    font-size: 0.95rem;
-    line-height: 1.5;
+.header-derecha a:hover {
+  color: var(--color-acento);
 }
 
-/* 🔹 Grid de servicios */
-.services-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1.5rem;
-    margin-top: 2rem;
+.icono-usuario {
+  font-size: 1.2rem;
 }
 
-/* 🔹 Imágenes dentro de cards */
-.card img {
-    border-radius: 0.5rem;
-    margin-bottom: 1rem;
-    width: 100%;
-    height: auto;
-    object-fit: cover;
+/* 🌸 SECCIÓN DE BIENVENIDA Y CATEGORÍAS */
+.categorias-belleza {
+  padding: 3rem 1rem;
+  text-align: center;
+  background-color: var(--color-categorias-fondo);
+  border-radius: 0 0 20px 20px;
 }
 
-/* 🔹 Footer */
-footer {
-    text-align: center;
-    padding: 1rem;
-    margin-top: 2rem;
-    background: #1f2937;
-    color: #f3f4f6;
-    font-size: 0.9rem;
+.categorias-belleza .saludo h1 {
+  font-size: 2.6rem;
+  font-weight: 600;
+  color: #4B2E5D;
+  margin-bottom: 2rem;
 }
 
+/* 🧴 Íconos de categoría sin texto */
+.categorias {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
 
+.categoria-icon {
+  width: 160px;
+  height: 160px;
+  background-color: white;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+  cursor: pointer;
+  overflow: hidden;
+}
 
+.categoria-icon:hover {
+  transform: scale(1.07);
+  background-color: var(--color-acento);
+}
+
+.categoria-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+  border-radius: 16px;
+}
+
+.categoria-icon:hover img {
+  transform: scale(1.05);
+}
