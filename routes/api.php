@@ -19,6 +19,8 @@ Route::middleware('auth:api')->group(function () {
     Route::get('profile', [AuthController::class, 'profile']);
     Route::post('logout', [AuthController::class, 'logout']);
     Route::post('refresh', [AuthController::class, 'refresh']);
+    Route::put('/profile', [AuthController::class, 'updateProfile']);
+    Route::put('/profile/password', [AuthController::class, 'changePassword']);
 });
 // ---------------------- TIENDAS ----------------------
 Route::get('tiendas', [TiendaController::class, 'index']); // Listar tiendas

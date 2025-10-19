@@ -89,4 +89,55 @@ class AuthController extends Controller
             'token' => auth()->refresh()
         ]);
     }
+    // 🔹 Actualizar perfil
+    public function updateProfile(Request $request)
+    {
+        $user = auth()->user(); // Obtener usuario desde JWT
+
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:100',
+            'email' => 'required|email|max:100|unique:users,email,' . $user->id,
+            'telefono' => 'nullable|string|max:20',
+            'direccion' => 'nullable|string',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
+
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->telefono = $request->telefono;
+        $user->direccion = $request->direccion;
+        $user->save();
+
+        return response()->json([
+            'message' => 'Perfil actualizado correctamente',
+            'user' => $user
+        ]);
+    }
+
+    // 🔹 Cambiar contraseña
+    public function changePassword(Request $request)
+    {
+        $user = auth()->user();
+
+        $validator = Validator::make($request->all(), [
+            'current_password' => 'required|string',
+            'new_password' => 'required|string|min:6|confirmed',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
+
+        if (!Hash::check($request->current_password, $user->password)) {
+            return response()->json(['error' => 'La contraseña actual es incorrecta'], 400);
+        }
+
+        $user->password = Hash::make($request->new_password);
+        $user->save();
+
+        return response()->json(['message' => 'Contraseña actualizada correctamente']);
+    }
 }
