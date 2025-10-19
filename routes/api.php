@@ -7,6 +7,8 @@ use App\Http\Controllers\TiendaController;
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\CarritoController;
+use App\Http\Controllers\PedidoController;
+use App\Http\Controllers\ComentarioController;
 
 // ----------------- Usuarios/Clientes/Emprendedores ----------------------
 //Rutas públicas
@@ -50,3 +52,26 @@ Route::middleware('auth:api')->group(function () {
     Route::put('carrito/detalle/{id}', [CarritoController::class, 'actualizarDetalle']);
     Route::delete('carrito/detalle/{id}', [CarritoController::class, 'eliminarDetalle']);
 });
+// ---------------------- PEDIDOS ----------------------
+Route::middleware('auth:api')->group(function () {
+    // Pedidos del cliente
+    Route::get('pedidos', [PedidoController::class, 'index']); // Listar todos los pedidos del usuario
+    Route::get('pedidos/{id}', [PedidoController::class, 'show']); // Detalle de un pedido
+    Route::post('pedidos', [PedidoController::class, 'store']); // Crear pedido desde carrito
+    // Actualizar estado (solo si eres dueño o tienda correspondiente)
+    Route::put('pedidos/{id}/estado', [PedidoController::class, 'actualizarEstado']); 
+    // Cancelar pedido
+    Route::delete('pedidos/{id}', [PedidoController::class, 'cancelarPedido']);
+});
+// ---------------------- COMENTARIOS ----------------------
+Route::middleware('jwt.auth')->group(function () {
+    Route::post('/comentarios', [ComentarioController::class, 'store']);
+    Route::put('/comentarios/{id}', [ComentarioController::class, 'update']);
+    Route::delete('/comentarios/{id}', [ComentarioController::class, 'destroy']);
+});
+// Rutas públicas
+Route::get('/comentarios', [ComentarioController::class, 'index']);
+Route::get('/comentarios/{id}', [ComentarioController::class, 'show']);
+// Opcionales por producto/tienda
+Route::get('/productos/{id}/comentarios', [ComentarioController::class, 'index']);
+Route::get('/tiendas/{id}/comentarios', [ComentarioController::class, 'index']);
