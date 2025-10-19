@@ -11,7 +11,7 @@ class DetalleCarrito extends Model
     
     protected $table = 'detalle_carrito';
     protected $primaryKey = 'id_detalle';
-    public $timestamps = false; // si tus migraciones usan created_at ajusta a true
+  
 
     protected $fillable = [
         'id_carrito',

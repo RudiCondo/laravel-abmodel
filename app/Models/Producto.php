@@ -22,7 +22,8 @@ class Producto extends Model
     ];
 
     protected $casts = [
-        'fecha_creacion' => 'datetime',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
     ];
 
     // Relaciones

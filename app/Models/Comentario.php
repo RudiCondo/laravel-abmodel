@@ -28,7 +28,7 @@ class Comentario extends Model
     // Un comentario pertenece a un usuario
     public function usuario()
     {
-        return $this->belongsTo(User::class, 'id_usuario', 'id_usuario');
+        return $this->belongsTo(User::class, 'id_usuario', 'id');
     }
 
     // Un comentario pertenece a un producto
