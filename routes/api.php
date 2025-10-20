@@ -9,7 +9,9 @@ use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\CarritoController;
 use App\Http\Controllers\PedidoController;
 use App\Http\Controllers\ComentarioController;
-
+use App\Http\Controllers\ChatController;
+// Chatbot
+Route::post('/chat', [ChatController::class, 'responder']);
 // ----------------- Usuarios/Clientes/Emprendedores ----------------------
 //Rutas públicas
 Route::post('/register', [AuthController::class, 'register']);
