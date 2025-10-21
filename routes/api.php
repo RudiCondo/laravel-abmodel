@@ -12,7 +12,7 @@ use App\Http\Controllers\ComentarioController;
 use App\Http\Controllers\ChatController;
 // Chatbot solo para usuarios autenticados
 Route::middleware('auth:api')->group(function () {
-    Route::post('/chat', [ChatController::class, 'responder']);
+    Route::post('/chat/responder', [ChatController::class, 'responder']);
 });
 // ----------------- Usuarios/Clientes/Emprendedores ----------------------
 //Rutas públicas
