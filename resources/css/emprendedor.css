@@ -1,0 +1,1248 @@
+/* 🔄 VARIABLES PARA EMPRENDEDOR - MEJORADO */
+:root {
+  --color-primario: hsl(37, 53%, 87%);
+  --color-secundario: #cdafe3;
+  --color-acento: #a05fa5;
+  --color-acento-oscuro: #3b2a7d;
+  --color-texto: #333;
+  --color-hover-texto: #fff;
+  --color-blanco: #fff;
+  --color-sombra: rgba(0, 0, 0, 0.1);
+  --color-exito: #4CAF50;
+  --color-error: #f44336;
+  --color-info: #2196F3;
+  --fuente-principal: 'Poppins', sans-serif;
+  --radio-base: 12px;
+  --transicion-suave: all 0.3s ease;
+}
+
+/* 🏠 ESTRUCTURA PRINCIPAL EMPRENDEDOR */
+.pantalla-emprendedor {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem;
+  background: linear-gradient(135deg, #fdf6f9, #f8f0fb);
+  min-height: 100vh;
+}
+
+/* 🔝 ENCABEZADO EMPRENDEDOR - CORREGIDO */
+.encabezado-emprendedor {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(135deg, var(--color-secundario), var(--color-primario));
+  padding: 1.5rem 2rem;
+  border-radius: 16px;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 15px rgba(160, 95, 165, 0.2);
+  position: relative;
+  overflow: visible;
+}
+
+.encabezado-emprendedor::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(135deg, var(--color-acento), var(--color-acento-oscuro));
+}
+
+#saludo-emprendedor {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--color-acento-oscuro);
+  margin: 0;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.acciones-emprendedor {
+  position: relative;
+  z-index: 1000;
+}
+
+.btn-perfil-toggle {
+  background: var(--color-acento);
+  color: var(--color-hover-texto);
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 25px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transicion-suave);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: 0 4px 12px rgba(160, 95, 165, 0.3);
+}
+
+.btn-perfil-toggle:hover {
+  background: var(--color-acento-oscuro);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(160, 95, 165, 0.4);
+}
+
+/* 🎀 MENÚ PERFIL - COMPLETAMENTE CORREGIDO Y FUNCIONAL */
+.menu-perfil {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  background: var(--color-blanco);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+  padding: 1.5rem;
+  min-width: 280px;
+  z-index: 1001;
+  display: none; /* IMPORTANTE: oculto por defecto */
+  border: 1px solid rgba(160, 95, 165, 0.2);
+  animation: fadeInUp 0.3s ease-out;
+}
+
+/* CLASE PARA MOSTRAR EL MENÚ - AGREGADA */
+.menu-perfil.mostrar {
+  display: block;
+}
+
+.menu-perfil p {
+  margin: 0 0 1rem 0;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #f0f0f0;
+  font-size: 0.95rem;
+}
+
+.menu-perfil strong {
+  color: var(--color-acento-oscuro);
+  font-weight: 600;
+}
+
+#btn-logout {
+  background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+  color: var(--color-hover-texto);
+  border: none;
+  padding: 0.8rem 1rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transicion-suave);
+  margin-top: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  justify-content: center;
+  width: 100%;
+}
+
+#btn-logout:hover {
+  background: linear-gradient(135deg, #ee5a52, #d32f2f);
+  transform: translateY(-2px);
+}
+
+/* 📝 BLOQUES DE CONTENIDO */
+.bloque-emprendedor {
+  background: var(--color-blanco);
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+  padding: 2rem;
+  margin-bottom: 2rem;
+  border: 1px solid rgba(160, 95, 165, 0.1);
+  transition: var(--transicion-suave);
+  position: relative;
+  overflow: hidden;
+}
+
+.bloque-emprendedor::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(135deg, var(--color-acento), var(--color-acento-oscuro));
+}
+
+.bloque-emprendedor:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 40px rgba(160, 95, 165, 0.15);
+}
+
+.bloque-emprendedor h2 {
+  color: var(--color-acento-oscuro);
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 3px solid var(--color-secundario);
+  display: inline-block;
+}
+
+/* 📝 FORMULARIOS */
+.form-emprendedor {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  max-width: 500px;
+}
+
+.form-emprendedor input,
+.form-emprendedor select,
+.form-emprendedor textarea {
+  padding: 1rem 1.2rem;
+  border: 2px solid #e8e8e8;
+  border-radius: 12px;
+  font-size: 1rem;
+  transition: var(--transicion-suave);
+  font-family: var(--fuente-principal);
+  background: var(--color-blanco);
+}
+
+.form-emprendedor input:focus,
+.form-emprendedor select:focus,
+.form-emprendedor textarea:focus {
+  outline: none;
+  border-color: var(--color-acento);
+  box-shadow: 0 0 0 3px rgba(160, 95, 165, 0.1);
+  transform: translateY(-2px);
+}
+
+.form-emprendedor button[type="submit"] {
+  background: linear-gradient(135deg, var(--color-acento), var(--color-acento-oscuro));
+  color: var(--color-hover-texto);
+  border: none;
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transicion-suave);
+  font-size: 1rem;
+  box-shadow: 0 4px 15px rgba(160, 95, 165, 0.3);
+}
+
+.form-emprendedor button[type="submit"]:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(160, 95, 165, 0.4);
+}
+
+/* 🏪 GRID DE TIENDAS - BOTONES SIMPLIFICADOS */
+.grid-tiendas-emprendedor {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.tienda-card-emprendedor {
+  background: var(--color-blanco);
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  padding: 1.5rem;
+  transition: var(--transicion-suave);
+  border: 1px solid rgba(160, 95, 165, 0.08);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.tienda-card-emprendedor::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(135deg, var(--color-acento), var(--color-acento-oscuro));
+}
+
+.tienda-card-emprendedor:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 32px rgba(160, 95, 165, 0.15);
+}
+
+.tienda-logo {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin: 0 auto 1rem;
+  border: 3px solid var(--color-secundario);
+  transition: var(--transicion-suave);
+  box-shadow: 0 4px 12px rgba(160, 95, 165, 0.2);
+}
+
+.tienda-card-emprendedor:hover .tienda-logo {
+  transform: scale(1.15);
+  border-color: var(--color-acento);
+}
+
+.tienda-card-emprendedor h3 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--color-acento-oscuro);
+  margin-bottom: 0.5rem;
+  position: relative;
+  padding-bottom: 0.5rem;
+}
+
+.tienda-card-emprendedor h3::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40px;
+  height: 2px;
+  background: linear-gradient(135deg, var(--color-acento), var(--color-secundario));
+  border-radius: 1px;
+}
+
+.tienda-card-emprendedor p {
+  color: #666;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+/* 🎯 BOTONES DE TIENDA - SIMPLIFICADOS Y MEJORADOS */
+.acciones-tienda {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+/* BOTONES MÁS SIMPLES COMO ANTES */
+.btn-agregar-producto,
+.btn-editar-tienda,
+.btn-eliminar-tienda {
+  border: none;
+  padding: 0.8rem 1.2rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transicion-suave);
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.btn-agregar-producto {
+  background: #28a745;
+  color: white;
+}
+
+.btn-agregar-producto:hover {
+  background: #218838;
+  transform: translateY(-2px);
+}
+
+.btn-editar-tienda {
+  background: #17a2b8;
+  color: white;
+}
+
+.btn-editar-tienda:hover {
+  background: #138496;
+  transform: translateY(-2px);
+}
+
+.btn-eliminar-tienda {
+  background: #dc3545;
+  color: white;
+}
+
+.btn-eliminar-tienda:hover {
+  background: #c82333;
+  transform: translateY(-2px);
+}
+
+/* 📦 GRID DE PRODUCTOS - BOTÓN ELIMINAR COMO ANTES */
+.grid-productos-emprendedor {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.producto-card-emprendedor {
+  background: var(--color-blanco);
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  padding: 1.5rem;
+  transition: var(--transicion-suave);
+  border: 1px solid rgba(160, 95, 165, 0.08);
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+}
+
+.producto-card-emprendedor::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(135deg, var(--color-acento), var(--color-acento-oscuro));
+}
+
+.producto-card-emprendedor:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 12px 32px rgba(160, 95, 165, 0.15);
+}
+
+.producto-img-emprendedor {
+  width: 100%;
+  height: 180px;
+  object-fit: contain;
+  border-radius: 12px;
+  margin-bottom: 1rem;
+  transition: var(--transicion-suave);
+  background: var(--color-primario);
+  padding: 1rem;
+}
+
+.producto-card-emprendedor:hover .producto-img-emprendedor {
+  transform: scale(1.05);
+}
+
+.producto-card-emprendedor h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--color-acento-oscuro);
+  margin-bottom: 0.5rem;
+  position: relative;
+  padding-bottom: 0.5rem;
+}
+
+.producto-card-emprendedor h3::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 30px;
+  height: 2px;
+  background: linear-gradient(135deg, var(--color-acento), var(--color-secundario));
+  border-radius: 1px;
+}
+
+.producto-descripcion {
+  color: #666;
+  margin-bottom: 1rem;
+  font-size: 0.85rem;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.producto-card-emprendedor p {
+  color: #666;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.producto-card-emprendedor strong {
+  color: var(--color-acento-oscuro);
+}
+
+.acciones-producto {
+  margin-top: 1rem;
+}
+
+/* BOTÓN ELIMINAR PRODUCTO - COMO ANTES (MÁS SIMPLE) */
+.btn-eliminar-producto {
+  background: #dc3545;
+  color: white;
+  border: none;
+  padding: 0.6rem 1rem;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transicion-suave);
+  font-size: 0.85rem;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.btn-eliminar-producto:hover {
+  background: #c82333;
+  transform: translateY(-2px);
+}
+
+/* 🪟 MODALES */
+.modal-emprendedor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(40, 40, 40, 0.6);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(4px);
+  padding: 1rem;
+}
+
+.modal-emprendedor form {
+  background: var(--color-blanco);
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  padding: 2.5rem;
+  max-width: 500px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  animation: modalAppear 0.3s ease-out;
+  position: relative;
+}
+
+.modal-emprendedor form::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(135deg, var(--color-acento), var(--color-acento-oscuro));
+  border-radius: 20px 20px 0 0;
+}
+
+@keyframes modalAppear {
+  from {
+    opacity: 0;
+    transform: scale(0.9) translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.modal-emprendedor h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--color-acento-oscuro);
+  margin-bottom: 1.5rem;
+  text-align: center;
+  position: relative;
+  padding-bottom: 0.5rem;
+}
+
+.modal-emprendedor h3::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(135deg, var(--color-acento), var(--color-acento-oscuro));
+  border-radius: 2px;
+}
+
+.acciones-modal {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.acciones-modal button {
+  flex: 1;
+  padding: 0.8rem 1.5rem;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transicion-suave);
+  border: none;
+}
+
+.acciones-modal button[type="submit"] {
+  background: var(--color-acento);
+  color: var(--color-hover-texto);
+}
+
+.acciones-modal button[type="submit"]:hover {
+  background: var(--color-acento-oscuro);
+  transform: translateY(-2px);
+}
+
+.acciones-modal button[type="button"] {
+  background: #6c757d;
+  color: var(--color-hover-texto);
+}
+
+.acciones-modal button[type="button"]:hover {
+  background: #5a6268;
+  transform: translateY(-2px);
+}
+
+/* 🗑️ MODAL DE CONFIRMACIÓN - NUEVO DISEÑO PROFESIONAL */
+.confirmacion-emprendedor {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--color-blanco);
+  border-radius: 20px;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+  padding: 2.5rem;
+  max-width: 450px;
+  width: 90%;
+  text-align: center;
+  z-index: 1002; /* MÁS ALTO QUE LOS OTROS MODALES */
+  display: none;
+  animation: modalSlideIn 0.3s ease-out;
+  border: 2px solid rgba(220, 53, 69, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.confirmacion-emprendedor::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 6px;
+  background: linear-gradient(135deg, var(--color-error), #d32f2f);
+  border-radius: 20px 20px 0 0;
+}
+
+.confirmacion-emprendedor::after {
+  content: '⚠️';
+  position: absolute;
+  top: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 4rem;
+  background: var(--color-blanco);
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 4px solid var(--color-error);
+  box-shadow: 0 4px 15px rgba(220, 53, 69, 0.3);
+}
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -60%) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+.confirmacion-emprendedor h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-error);
+  margin-bottom: 1.5rem;
+  margin-top: 1.5rem;
+  position: relative;
+  padding-bottom: 0.5rem;
+}
+
+.confirmacion-emprendedor h3::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 3px;
+  background: linear-gradient(135deg, var(--color-error), #d32f2f);
+  border-radius: 2px;
+}
+
+#confirmacion-mensaje {
+  font-size: 1.1rem;
+  color: var(--color-texto);
+  margin-bottom: 2.5rem;
+  line-height: 1.6;
+  padding: 0 1rem;
+  font-weight: 500;
+}
+
+.acciones-confirmacion {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.acciones-confirmacion button {
+  padding: 1rem 2rem;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transicion-suave);
+  border: none;
+  min-width: 150px;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  justify-content: center;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+#confirmar-eliminacion {
+  background: linear-gradient(135deg, var(--color-error), #d32f2f);
+  color: var(--color-hover-texto);
+  box-shadow: 0 4px 15px rgba(220, 53, 69, 0.4);
+}
+
+#confirmar-eliminacion:hover {
+  background: linear-gradient(135deg, #d32f2f, #c62828);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(220, 53, 69, 0.5);
+}
+
+#cancelar-eliminacion {
+  background: linear-gradient(135deg, #6c757d, #5a6268);
+  color: var(--color-hover-texto);
+  box-shadow: 0 4px 15px rgba(108, 117, 125, 0.4);
+}
+
+#cancelar-eliminacion:hover {
+  background: linear-gradient(135deg, #5a6268, #495057);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(108, 117, 125, 0.5);
+}
+
+/* 🎭 OVERLAY PARA MODALES */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(8px);
+  z-index: 999;
+  display: none;
+}
+
+/* 🔔 ALERTAS - MEJORADAS */
+.alerta-emprendedor {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: linear-gradient(135deg, var(--color-secundario), var(--color-acento));
+  color: var(--color-hover-texto);
+  padding: 1.2rem 2rem;
+  border-radius: 12px;
+  font-weight: 600;
+  box-shadow: 0 8px 25px rgba(160, 95, 165, 0.3);
+  z-index: 9999;
+  animation: slideInRight 0.4s ease both;
+  font-size: 1rem;
+  max-width: 400px;
+  text-align: center;
+  border-left: 4px solid var(--color-acento-oscuro);
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.alerta-emprendedor.error {
+  background: linear-gradient(135deg, var(--color-error), #d32f2f);
+  border-left-color: #c62828;
+}
+
+.alerta-emprendedor.success {
+  background: linear-gradient(135deg, var(--color-exito), #45a049);
+  border-left-color: #2e7d32;
+}
+
+/* 🎬 ANIMACIONES */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 📱 RESPONSIVE */
+@media (max-width: 768px) {
+  .pantalla-emprendedor {
+    padding: 0.5rem;
+  }
+  
+  .encabezado-emprendedor {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+    padding: 1.5rem 1rem;
+  }
+  
+  #saludo-emprendedor {
+    font-size: 1.5rem;
+  }
+  
+  .bloque-emprendedor {
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .grid-tiendas-emprendedor {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .grid-productos-emprendedor {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+  }
+  
+  .acciones-tienda {
+    flex-direction: column;
+  }
+  
+  .menu-perfil {
+    position: fixed;
+    top: auto;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border-radius: 16px 16px 0 0;
+    min-width: auto;
+    margin: 1rem;
+  }
+  
+  .acciones-modal,
+  .acciones-confirmacion {
+    flex-direction: column;
+  }
+  
+  .confirmacion-emprendedor {
+    padding: 2rem 1.5rem;
+    max-width: 90%;
+  }
+  
+  .confirmacion-emprendedor::after {
+    top: -25px;
+    width: 60px;
+    height: 60px;
+    font-size: 3rem;
+  }
+  
+  .acciones-confirmacion button {
+    min-width: 120px;
+    padding: 0.8rem 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .grid-productos-emprendedor {
+    grid-template-columns: 1fr;
+  }
+  
+  .modal-emprendedor form {
+    padding: 1.5rem;
+    margin: 1rem;
+  }
+  
+  .confirmacion-emprendedor {
+    padding: 1.5rem 1rem;
+  }
+  
+  .acciones-confirmacion {
+    flex-direction: column;
+  }
+  
+  .acciones-confirmacion button {
+    width: 100%;
+  }
+}
+
+/* 🎨 ESTADOS ESPECIALES */
+.sin-contenido {
+  text-align: center;
+  color: #666;
+  font-style: italic;
+  padding: 3rem 2rem;
+  grid-column: 1 / -1;
+  background: #f8f9fa;
+  border-radius: var(--radio-base);
+  border: 2px dashed #dee2e6;
+}
+
+.sin-contenido small {
+  display: block;
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  color: #999;
+}
+
+.error-carga {
+  text-align: center;
+  padding: 2rem;
+  color: var(--color-error);
+  background: #ffe6e6;
+  border-radius: var(--radio-base);
+  grid-column: 1 / -1;
+  border: 1px solid #ffcdd2;
+}
+
+.btn-reintentar {
+  background: var(--color-acento);
+  color: var(--color-hover-texto);
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 1rem;
+  font-weight: 600;
+  transition: var(--transicion-suave);
+}
+
+.btn-reintentar:hover {
+  background: var(--color-acento-oscuro);
+  transform: translateY(-2px);
+}
+/* 🗑️ MODAL DE CONFIRMACIÓN - SOLO ESTO */
+.confirmacion-emprendedor {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--color-blanco);
+  border-radius: 20px;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3);
+  padding: 2.5rem;
+  max-width: 420px;
+  width: 90%;
+  text-align: center;
+  z-index: 10002;
+  display: none;
+  animation: modalSlideIn 0.3s ease-out;
+}
+
+.confirmacion-emprendedor::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 6px;
+  background: linear-gradient(135deg, var(--color-acento), var(--color-acento-oscuro));
+  border-radius: 20px 20px 0 0;
+}
+
+.confirmacion-emprendedor::after {
+  content: '⚠️';
+  position: absolute;
+  top: -35px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 3.5rem;
+  background: var(--color-blanco);
+  border-radius: 50%;
+  width: 70px;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 4px solid var(--color-acento);
+  box-shadow: 0 8px 25px rgba(160, 95, 165, 0.3);
+}
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+.confirmacion-emprendedor h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-acento-oscuro);
+  margin-bottom: 1rem;
+  margin-top: 1.5rem;
+}
+
+#confirmacion-mensaje {
+  font-size: 1.1rem;
+  color: var(--color-texto);
+  margin-bottom: 2rem;
+  line-height: 1.6;
+}
+
+.acciones-confirmacion {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+#confirmar-eliminacion {
+  background: linear-gradient(135deg, var(--color-acento), var(--color-acento-oscuro));
+  color: var(--color-hover-texto);
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  min-width: 140px;
+}
+
+#confirmar-eliminacion:hover {
+  background: linear-gradient(135deg, var(--color-acento-oscuro), #2c225f);
+  transform: translateY(-2px);
+}
+
+#cancelar-eliminacion {
+  background: linear-gradient(135deg, #6c757d, #5a6268);
+  color: var(--color-hover-texto);
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  min-width: 140px;
+}
+
+#cancelar-eliminacion:hover {
+  background: linear-gradient(135deg, #5a6268, #495057);
+  transform: translateY(-2px);
+}
+
+/* ESTILOS PARA EL PERFIL DE USUARIO */
+.profile-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+
+.profile-trigger {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: white;
+    padding: 12px 20px;
+    border-radius: 30px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.profile-trigger:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 25px rgba(0,0,0,0.2);
+    border-color: #667eea;
+}
+
+.profile-avatar {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    border: 3px solid #e8eeff;
+}
+
+.profile-info {
+    text-align: left;
+}
+
+.profile-name {
+    font-weight: 700;
+    color: #2d3748;
+    font-size: 16px;
+    margin-bottom: 2px;
+}
+
+.profile-email {
+    color: #718096;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.profile-dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin-top: 10px;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+    min-width: 280px;
+    padding: 0;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+    border: 1px solid #e2e8f0;
+    overflow: hidden;
+}
+
+.profile-container.active .profile-dropdown {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.profile-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 25px 20px;
+    color: white;
+    text-align: center;
+}
+
+.profile-header .profile-avatar-large {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 15px;
+    font-size: 24px;
+    font-weight: bold;
+    border: 4px solid rgba(255,255,255,0.3);
+}
+
+.profile-header h3 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.profile-header p {
+    font-size: 14px;
+    opacity: 0.9;
+    margin-bottom: 8px;
+}
+
+.profile-badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.2);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.profile-menu {
+    padding: 15px 0;
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 20px;
+    color: #4a5568;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    border-left: 3px solid transparent;
+}
+
+.menu-item:hover {
+    background: #f7fafc;
+    color: #667eea;
+    border-left-color: #667eea;
+}
+
+.menu-item i {
+    width: 20px;
+    text-align: center;
+    font-size: 16px;
+}
+
+.menu-divider {
+    height: 1px;
+    background: #e2e8f0;
+    margin: 10px 0;
+}
+
+.menu-item.logout {
+    color: #e53e3e;
+    border-top: 1px solid #e2e8f0;
+    margin-top: 5px;
+}
+
+.menu-item.logout:hover {
+    background: #fed7d7;
+    color: #c53030;
+}
+
+/* Animación de aparición */
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.profile-dropdown {
+    animation: slideDown 0.3s ease;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .profile-container {
+        top: 15px;
+        right: 15px;
+    }
+    
+    .profile-trigger {
+        padding: 10px 15px;
+    }
+    
+    .profile-name {
+        display: none;
+    }
+    
+    .profile-dropdown {
+        position: fixed;
+        top: 80px;
+        right: 15px;
+        left: 15px;
+        min-width: auto;
+    }
+}
+ lo mismo aca porfavor

@@ -1,294 +1,501 @@
-document.addEventListener('DOMContentLoaded', async () => {
-  const token = localStorage.getItem('token');
-  if (!token) return window.location.href = '/';
+// resources/js/cliente.js
 
-  // 🌸 Elementos globales
-  const saludo = document.getElementById('saludo-cliente');
-  const correo = document.getElementById('correo-usuario');
-  const telefono = document.getElementById('telefono-usuario');
-  const direccion = document.getElementById('direccion-usuario');
-  const perfilDropdown = document.getElementById('perfil-dropdown');
-  const btnPerfil = document.getElementById('btn-perfil');
-  const btnLogout = document.getElementById('btn-logout');
-  const productosGrid = document.getElementById('grid-productos');
-  const tiendasGrid = document.getElementById('grid-tiendas');
-  const btnCarrito = document.getElementById('btn-carrito');
-  const seccionCarrito = document.getElementById('seccion-carrito');
-  const inputBusqueda = document.getElementById('input-busqueda-header');
+// Estado global de la aplicación
+const estadoCliente = {
+    usuario: null,
+    carrito: null,
+    pedidos: [],
+    productos: [],
+    token: localStorage.getItem('token')
+};
 
-  let todosLosProductos = [];
-
-  // 🌸 Cargar perfil y saludo
-  try {
-    const res = await fetch('/api/profile', {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        Accept: 'application/json'
-      }
-    });
-
-    if (res.ok) {
-      const user = await res.json();
-      saludo.textContent = `Bienvenid@, ${user.name}`;
-      correo.textContent = user.email;
-      telefono.textContent = user.telefono ?? 'No registrado';
-      direccion.textContent = user.direccion ?? 'No registrada';
-    }
-  } catch (error) {
-    console.error('Error al cargar perfil:', error);
-  }
-
-  // 🔽 Mostrar/ocultar menú de perfil
-  btnPerfil?.addEventListener('click', () => {
-    perfilDropdown?.classList.toggle('hidden');
-  });
-
-  // 🔐 Cerrar sesión
-  btnLogout?.addEventListener('click', async () => {
-    try {
-      await fetch('/api/logout', {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${token}`,
-          Accept: 'application/json'
-        }
-      });
-    } catch (error) {
-      console.error('Error al cerrar sesión:', error);
-    } finally {
-      localStorage.removeItem('token');
-      window.location.href = '/';
-    }
-  });
-
-  // 🔽 Cerrar perfil al hacer clic fuera
-  document.addEventListener('click', (event) => {
-    const isClickInside = perfilDropdown?.contains(event.target) || btnPerfil?.contains(event.target);
-    if (!isClickInside) {
-      perfilDropdown?.classList.add('hidden');
-    }
-  });
-
-  // 🏪 Mostrar tiendas
-  function mostrarTiendas(lista) {
-    tiendasGrid.innerHTML = `<h2>🏪 Tiendas disponibles</h2>`;
-    if (!lista || lista.length === 0) {
-      tiendasGrid.innerHTML += `<p>No hay tiendas disponibles.</p>`;
-      return;
-    }
-
-    lista.forEach(tienda => {
-      const card = document.createElement('div');
-      card.classList.add('card-tienda');
-      card.innerHTML = `
-        <img src="${tienda.logo_url}" alt="${tienda.nombre_tienda}">
-        <h3>${tienda.nombre_tienda}</h3>
-        <p>${tienda.descripcion}</p>
-      `;
-      tiendasGrid.appendChild(card);
-    });
-  }
-
-  // 🏪 Cargar tiendas
-  async function cargarTiendas() {
-    try {
-      const res = await fetch('/api/tiendas');
-      const tiendas = await res.json();
-      mostrarTiendas(tiendas);
-    } catch (error) {
-      console.error('Error al cargar tiendas:', error);
-    }
-  }
-
-  // 🎨 Cargar productos por categoría
-  document.querySelectorAll('.categoria-icon').forEach(icon => {
-    icon.addEventListener('click', async (e) => {
-      e.preventDefault();
-      const categoriaId = icon.dataset.id;
-
-      try {
-        const res = await fetch(`/api/categorias/${categoriaId}`);
-        const data = await res.json();
-        productosGrid.innerHTML = `<h2>Productos de la categoría</h2>`;
-        mostrarProductos(data.productos ?? []);
-      } catch (error) {
-        console.error('Error al cargar productos por categoría:', error);
-      }
-    });
-  });
-
-  // 🧴 Cargar productos destacados al iniciar
-  async function cargarProductosDestacados() {
-    try {
-      const res = await fetch('/api/productos');
-      const productos = await res.json();
-      todosLosProductos = productos;
-      productosGrid.innerHTML = `<h2>🧴 Productos destacados</h2>`;
-      mostrarProductos(productos);
-    } catch (error) {
-      console.error('Error al cargar productos destacados:', error);
-    }
-  }
-
-  // 🔍 Filtrar productos por nombre desde el header
-  inputBusqueda?.addEventListener('input', () => {
-    const texto = inputBusqueda.value.toLowerCase();
-    const filtrados = todosLosProductos.filter(p =>
-      p.nombre.toLowerCase().includes(texto)
-    );
-    productosGrid.innerHTML = `<h2>Resultados de búsqueda</h2>`;
-    mostrarProductos(filtrados);
-  });
-
-  // 🧩 Mostrar productos
-  function mostrarProductos(productos) {
-    productosGrid.innerHTML += '<div class="productos-lista"></div>';
-    const contenedor = productosGrid.querySelector('.productos-lista');
-
-    if (!productos || productos.length === 0) {
-      contenedor.innerHTML = `<p>No hay productos disponibles.</p>`;
-      return;
-    }
-
-    productos.forEach(producto => {
-      const card = document.createElement('div');
-      card.classList.add('producto-card');
-      card.innerHTML = `
-        <img src="${producto.imagen_url}" alt="${producto.nombre}" class="producto-img">
-        <h3>${producto.nombre}</h3>
-        <p>${producto.descripcion}</p>
-        <p><strong>Precio:</strong> Bs ${producto.precio}</p>
-        <p><strong>Tienda:</strong> ${producto.tienda?.nombre ?? 'Sin tienda'}</p>
-        <button class="btn-agregar" data-id="${producto.id}">Comprar ahora</button>
-      `;
-      contenedor.appendChild(card);
-    });
-
-    contenedor.querySelectorAll('.btn-agregar').forEach(btn => {
-      btn.addEventListener('click', async () => {
-        const id = btn.dataset.id;
-        const res = await fetch('/api/carrito/detalle', {
-          method: 'POST',
-          headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json',
-            Accept: 'application/json'
-          },
-          body: JSON.stringify({ producto_id: id, cantidad: 1 })
-        });
-
-        if (res.ok) {
-          btn.textContent = 'Agregado 🎉';
-          btn.disabled = true;
-        } else {
-          alert('No se pudo agregar. Intenta nuevamente.');
-        }
-      });
-    });
-  }
-
-  // 🛒 Mostrar carrito
-  btnCarrito?.addEventListener('click', async () => {
-    seccionCarrito.classList.remove('hidden');
-    productosGrid.innerHTML = '';
-
-    try {
-      const res = await fetch('/api/carrito', {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          Accept: 'application/json'
-        }
-      });
-
-      const carrito = await res.json();
-      seccionCarrito.innerHTML = `<h2>🛒 Tu carrito</h2>`;
-
-      if (!carrito.detalles || carrito.detalles.length === 0) {
-        seccionCarrito.innerHTML += `<p>Tu carrito está vacío.</p>`;
-        return;
-      }
-
-      carrito.detalles.forEach(item => {
-        const card = document.createElement('div');
-        card.classList.add('carrito-item');
-        card.innerHTML = `
-          <h3>${item.producto.nombre}</h3>
-          <p><strong>Precio:</strong> Bs ${item.producto.precio}</p>
-          <p><strong>Cantidad:</strong> 
-            <input type="number" min="1" value="${item.cantidad}" data-id="${item.id}" class="input-cantidad">
-          </p>
-          <button class="btn-eliminar" data-id="${item.id}">Eliminar</button>
+// Utilidades
+const utils = {
+    // Mostrar notificación
+    mostrarNotificacion(mensaje, tipo = 'info') {
+        const toast = document.createElement('div');
+        toast.className = `toast-notification toast-${tipo}`;
+        toast.innerHTML = `
+            <div class="toast-content">
+                <i class="fas fa-${tipo === 'success' ? 'check' : tipo === 'error' ? 'exclamation-triangle' : 'info'}"></i>
+                <span>${mensaje}</span>
+            </div>
         `;
-        seccionCarrito.appendChild(card);
-      });
+        
+        document.body.appendChild(toast);
+        
+        setTimeout(() => {
+            toast.classList.add('fade-out');
+            setTimeout(() => toast.remove(), 300);
+        }, 3000);
+    },
 
-      // 🎯 Modificar cantidad
-      seccionCarrito.querySelectorAll('.input-cantidad').forEach(input => {
-        input.addEventListener('change', async () => {
-          const id = input.dataset.id;
-          const nuevaCantidad = input.value;
+    // Formatear precio
+    formatearPrecio(precio) {
+        return `Bs. ${parseFloat(precio).toFixed(2)}`;
+    },
 
-          await fetch(`/api/carrito/detalle/${id}`, {
-            method: 'PUT',
-            headers: {
-              Authorization: `Bearer ${token}`,
-              'Content-Type': 'application/json',
-              Accept: 'application/json'
-            },
-            body: JSON.stringify({ cantidad: nuevaCantidad })
-          });
-        });
-      });
-
-      // 🗑 Eliminar producto
-      seccionCarrito.querySelectorAll('.btn-eliminar').forEach(btn => {
-        btn.addEventListener('click', async () => {
-          const id = btn.dataset.id;
-
-                    await fetch(`/api/carrito/detalle/${id}`, {
-            method: 'DELETE',
-            headers: {
-              Authorization: `Bearer ${token}`,
-              Accept: 'application/json'
-            }
-          });
-
-          btn.parentElement.remove();
-        });
-      });
-
-      // ✅ Confirmar pedido
-      const confirmar = document.createElement('button');
-      confirmar.textContent = 'Confirmar pedido';
-      confirmar.classList.add('btn-confirmar');
-      confirmar.addEventListener('click', async () => {
-        try {
-          const res = await fetch('/api/pedidos', {
-            method: 'POST',
-            headers: {
-              Authorization: `Bearer ${token}`,
-              Accept: 'application/json'
-            }
-          });
-
-          if (res.ok) {
-            seccionCarrito.innerHTML = `<p>🎉 Pedido confirmado. Gracias por tu compra.</p>`;
-          } else {
-            alert('No se pudo confirmar el pedido.');
-          }
-        } catch (error) {
-          console.error('Error al confirmar el pedido:', error);
+    // Manejar errores de API
+    manejarError(error) {
+        console.error('Error:', error);
+        if (error.status === 401) {
+            this.mostrarNotificacion('Sesión expirada. Por favor inicia sesión nuevamente.', 'error');
+            setTimeout(() => window.location.href = '/login', 2000);
+        } else {
+            this.mostrarNotificacion('Error al cargar los datos', 'error');
         }
-      });
-
-      seccionCarrito.appendChild(confirmar);
-
-    } catch (error) {
-      console.error('Error al cargar el carrito:', error);
     }
-  });
+};
 
-  // 🧭 Ejecutar funciones iniciales
-  await cargarTiendas();
-  await cargarProductosDestacados();
+// API Client
+const apiCliente = {
+    headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${estadoCliente.token}`
+    },
+
+    async get(url) {
+        try {
+            const response = await fetch(`/api${url}`, {
+                headers: this.headers
+            });
+            
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
+            
+            const data = await response.json();
+            return data.success ? data.data : null;
+        } catch (error) {
+            utils.manejarError(error);
+            return null;
+        }
+    },
+
+    async post(url, body) {
+        try {
+            const response = await fetch(`/api${url}`, {
+                method: 'POST',
+                headers: this.headers,
+                body: JSON.stringify(body)
+            });
+            
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
+            
+            const data = await response.json();
+            return data;
+        } catch (error) {
+            utils.manejarError(error);
+            return null;
+        }
+    },
+
+    async put(url, body) {
+        try {
+            const response = await fetch(`/api${url}`, {
+                method: 'PUT',
+                headers: this.headers,
+                body: JSON.stringify(body)
+            });
+            
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
+            
+            const data = await response.json();
+            return data;
+        } catch (error) {
+            utils.manejarError(error);
+            return null;
+        }
+    },
+
+    async delete(url) {
+        try {
+            const response = await fetch(`/api${url}`, {
+                method: 'DELETE',
+                headers: this.headers
+            });
+            
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
+            
+            const data = await response.json();
+            return data;
+        } catch (error) {
+            utils.manejarError(error);
+            return null;
+        }
+    }
+};
+
+// Gestión de Datos
+const datosCliente = {
+    // Cargar perfil del usuario
+    async cargarPerfil() {
+        const usuario = await apiCliente.get('/profile');
+        if (usuario) {
+            estadoCliente.usuario = usuario;
+            this.actualizarUIUsuario();
+        }
+    },
+
+    // Cargar carrito
+    async cargarCarrito() {
+        const carrito = await apiCliente.get('/carrito');
+        estadoCliente.carrito = carrito;
+        this.actualizarUICarrito();
+    },
+
+    // Cargar pedidos
+    async cargarPedidos() {
+        const pedidos = await apiCliente.get('/pedidos');
+        if (pedidos) {
+            estadoCliente.pedidos = pedidos;
+            this.mostrarPedidosRecientes();
+        }
+    },
+
+    // Cargar productos
+    async cargarProductos() {
+        const productos = await apiCliente.get('/productos');
+        if (productos) {
+            estadoCliente.productos = productos.slice(0, 6); // Mostrar solo 6
+            this.mostrarProductos();
+        }
+    },
+
+    // Agregar producto al carrito
+    async agregarAlCarrito(idProducto, cantidad = 1) {
+        const resultado = await apiCliente.post('/carrito/detalle', {
+            id_producto: idProducto,
+            cantidad: cantidad
+        });
+
+        if (resultado && resultado.success) {
+            utils.mostrarNotificacion('Producto agregado al carrito', 'success');
+            await this.cargarCarrito(); // Recargar carrito
+        } else {
+            utils.mostrarNotificacion('Error al agregar producto', 'error');
+        }
+    },
+
+    // Actualizar cantidad en carrito
+    async actualizarCantidadCarrito(idDetalle, nuevaCantidad) {
+        if (nuevaCantidad < 1) {
+            await this.eliminarDelCarrito(idDetalle);
+            return;
+        }
+
+        const resultado = await apiCliente.put(`/carrito/detalle/${idDetalle}`, {
+            cantidad: nuevaCantidad
+        });
+
+        if (resultado && resultado.success) {
+            await this.cargarCarrito();
+        }
+    },
+
+    // Eliminar producto del carrito
+    async eliminarDelCarrito(idDetalle) {
+        const resultado = await apiCliente.delete(`/carrito/detalle/${idDetalle}`);
+        
+        if (resultado && resultado.success) {
+            utils.mostrarNotificacion('Producto eliminado del carrito', 'success');
+            await this.cargarCarrito();
+        }
+    },
+
+    // Crear pedido desde carrito
+    async crearPedido() {
+        if (!estadoCliente.carrito || !estadoCliente.carrito.detalles || estadoCliente.carrito.detalles.length === 0) {
+            utils.mostrarNotificacion('El carrito está vacío', 'error');
+            return;
+        }
+
+        const resultado = await apiCliente.post('/pedidos');
+        
+        if (resultado && resultado.success) {
+            utils.mostrarNotificacion('Pedido creado exitosamente', 'success');
+            await this.cargarCarrito();
+            await this.cargarPedidos();
+            modalManager.cerrarModalCarrito();
+        } else {
+            utils.mostrarNotificacion('Error al crear pedido', 'error');
+        }
+    }
+};
+
+// Gestión de UI
+const uiManager = {
+    // Actualizar UI con datos del usuario
+    actualizarUIUsuario() {
+        if (!estadoCliente.usuario) return;
+
+        const nombreElement = document.getElementById('cliente-nombre');
+        const emailElement = document.getElementById('cliente-email');
+        
+        if (nombreElement) nombreElement.textContent = `¡Hola, ${estadoCliente.usuario.name}!`;
+        if (emailElement) emailElement.textContent = estadoCliente.usuario.email;
+    },
+
+    // Actualizar UI del carrito
+    actualizarUICarrito() {
+        this.actualizarContadorCarrito();
+        this.actualizarResumenCarrito();
+        
+        if (modalManager.modalCarritoAbierto) {
+            this.mostrarCarritoModal();
+        }
+    },
+
+    // Actualizar contador del carrito
+    actualizarContadorCarrito() {
+        const countElement = document.getElementById('carrito-count');
+        const itemsCountElement = document.getElementById('carrito-items-count');
+        
+        const totalItems = estadoCliente.carrito && estadoCliente.carrito.detalles 
+            ? estadoCliente.carrito.detalles.reduce((sum, item) => sum + item.cantidad, 0)
+            : 0;
+
+        if (countElement) countElement.textContent = totalItems;
+        if (itemsCountElement) itemsCountElement.textContent = totalItems;
+    },
+
+    // Actualizar resumen numérico
+    actualizarResumenCarrito() {
+        const pedidosCount = document.getElementById('pedidos-count');
+        const productosCount = document.getElementById('productos-count');
+        
+        if (pedidosCount) {
+            const pedidosActivos = estadoCliente.pedidos.filter(p => 
+                ['pendiente', 'confirmado', 'en_camino'].includes(p.estado)
+            ).length;
+            pedidosCount.textContent = pedidosActivos;
+        }
+        
+        if (productosCount && estadoCliente.productos) {
+            productosCount.textContent = estadoCliente.productos.length;
+        }
+    },
+
+    // Mostrar pedidos recientes
+    mostrarPedidosRecientes() {
+        const container = document.getElementById('pedidos-container');
+        if (!container) return;
+
+        const pedidosRecientes = estadoCliente.pedidos.slice(0, 3); // Mostrar 3 más recientes
+
+        if (pedidosRecientes.length === 0) {
+            container.innerHTML = `
+                <div class="sin-datos">
+                    <i class="fas fa-box-open"></i>
+                    <h3>No tienes pedidos aún</h3>
+                    <p>¡Realiza tu primera compra!</p>
+                </div>
+            `;
+            return;
+        }
+
+        container.innerHTML = pedidosRecientes.map(pedido => `
+            <div class="pedido-card" onclick="modalManager.mostrarDetallePedido(${pedido.id_pedido})">
+                <div class="pedido-header">
+                    <span class="pedido-id">Pedido #${pedido.id_pedido}</span>
+                    <span class="estado-badge estado-${pedido.estado}">
+                        ${this.formatearEstado(pedido.estado)}
+                    </span>
+                </div>
+                <div class="pedido-total">
+                    Total: ${utils.formatearPrecio(pedido.total)}
+                </div>
+                <div class="pedido-fecha">
+                    ${new Date(pedido.created_at).toLocaleDateString()}
+                </div>
+            </div>
+        `).join('');
+    },
+
+    // Mostrar productos
+    mostrarProductos() {
+        const container = document.getElementById('productos-grid');
+        if (!container || !estadoCliente.productos) return;
+
+        if (estadoCliente.productos.length === 0) {
+            container.innerHTML = `
+                <div class="sin-datos">
+                    <i class="fas fa-store"></i>
+                    <h3>No hay productos disponibles</h3>
+                    <p>Pronto tendremos novedades</p>
+                </div>
+            `;
+            return;
+        }
+
+        container.innerHTML = estadoCliente.productos.map(producto => `
+            <div class="producto-card">
+                <div class="producto-imagen">
+                    <img src="${producto.imagen_url || '/images/placeholder-producto.jpg'}" 
+                         alt="${producto.nombre_producto}"
+                         onerror="this.src='/images/placeholder-producto.jpg'">
+                </div>
+                <div class="producto-info">
+                    <h3 class="producto-nombre">${producto.nombre_producto}</h3>
+                    <div class="producto-precio">${utils.formatearPrecio(producto.precio)}</div>
+                    <div class="producto-stock">
+                        ${producto.stock > 0 ? `${producto.stock} disponibles` : 'Agotado'}
+                    </div>
+                    <button class="btn-agregar-carrito" 
+                            onclick="datosCliente.agregarAlCarrito(${producto.id_producto}, 1)"
+                            ${producto.stock === 0 ? 'disabled' : ''}>
+                        <i class="fas fa-cart-plus"></i>
+                        ${producto.stock === 0 ? 'Agotado' : 'Agregar al Carrito'}
+                    </button>
+                </div>
+            </div>
+        `).join('');
+    },
+
+    // Formatear estado del pedido
+    formatearEstado(estado) {
+        const estados = {
+            'pendiente': 'Pendiente',
+            'confirmado': 'Confirmado', 
+            'pago_acordado': 'Pago Acordado',
+            'en_camino': 'En Camino',
+            'entregado': 'Entregado',
+            'cancelado': 'Cancelado'
+        };
+        return estados[estado] || estado;
+    }
+};
+
+// Gestión de Modales
+const modalManager = {
+    modalCarritoAbierto: false,
+
+    // Modal Carrito
+    abrirModalCarrito() {
+        this.modalCarritoAbierto = true;
+        const modal = document.getElementById('modal-carrito');
+        const overlay = document.getElementById('modal-overlay');
+        
+        if (modal) modal.classList.add('active');
+        if (overlay) overlay.classList.add('active');
+        
+        uiManager.mostrarCarritoModal();
+    },
+
+    cerrarModalCarrito() {
+        this.modalCarritoAbierto = false;
+        const modal = document.getElementById('modal-carrito');
+        const overlay = document.getElementById('modal-overlay');
+        
+        if (modal) modal.classList.remove('active');
+        if (overlay) overlay.classList.remove('active');
+    },
+
+    mostrarCarritoModal() {
+        const modalBody = document.querySelector('.modal-carrito .modal-body');
+        if (!modalBody) return;
+
+        if (!estadoCliente.carrito || !estadoCliente.carrito.detalles || estadoCliente.carrito.detalles.length === 0) {
+            modalBody.innerHTML = `
+                <div class="carrito-vacio">
+                    <i class="fas fa-shopping-cart"></i>
+                    <h4>Tu carrito está vacío</h4>
+                    <p>Agrega algunos productos para continuar</p>
+                </div>
+            `;
+            return;
+        }
+
+        let total = 0;
+        
+        modalBody.innerHTML = estadoCliente.carrito.detalles.map(detalle => {
+            const subtotal = detalle.cantidad * detalle.producto.precio;
+            total += subtotal;
+            
+            return `
+                <div class="carrito-item">
+                    <img src="${detalle.producto.imagen_url || '/images/placeholder-producto.jpg'}" 
+                         alt="${detalle.producto.nombre_producto}">
+                    <div class="item-info">
+                        <h4>${detalle.producto.nombre_producto}</h4>
+                        <div class="item-precio">${utils.formatearPrecio(detalle.producto.precio)}</div>
+                        <div class="item-controls">
+                            <button onclick="datosCliente.actualizarCantidadCarrito(${detalle.id_detalle}, ${detalle.cantidad - 1})">-</button>
+                            <span>${detalle.cantidad}</span>
+                            <button onclick="datosCliente.actualizarCantidadCarrito(${detalle.id_detalle}, ${detalle.cantidad + 1})">+</button>
+                        </div>
+                    </div>
+                    <button class="btn-eliminar" onclick="datosCliente.eliminarDelCarrito(${detalle.id_detalle})">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            `;
+        }).join('') + `
+            <div class="carrito-total">
+                <span>Total:</span>
+                <span>${utils.formatearPrecio(total)}</span>
+            </div>
+        `;
+    },
+
+    // Modal Perfil
+    abrirModalPerfil() {
+        const modal = document.getElementById('modal-perfil');
+        const overlay = document.getElementById('modal-overlay');
+        
+        if (modal) modal.classList.add('active');
+        if (overlay) overlay.classList.add('active');
+        
+        this.mostrarPerfilModal();
+    },
+
+    cerrarModalPerfil() {
+        const modal = document.getElementById('modal-perfil');
+        const overlay = document.getElementById('modal-overlay');
+        
+        if (modal) modal.classList.remove('active');
+        if (overlay) overlay.classList.remove('active');
+    },
+
+    mostrarPerfilModal() {
+        // Implementar lógica del modal de perfil
+        console.log('Mostrar modal de perfil');
+    }
+};
+
+// Inicialización
+document.addEventListener('DOMContentLoaded', async () => {
+    // Verificar autenticación
+    if (!estadoCliente.token) {
+        window.location.href = '/login';
+        return;
+    }
+
+    try {
+        // Cargar datos iniciales
+        await Promise.all([
+            datosCliente.cargarPerfil(),
+            datosCliente.cargarCarrito(),
+            datosCliente.cargarPedidos(),
+            datosCliente.cargarProductos()
+        ]);
+
+        utils.mostrarNotificacion('¡Bienvenido de nuevo!', 'success');
+    } catch (error) {
+        utils.manejarError(error);
+    }
 });
+
+// Event Listeners globales
+document.addEventListener('click', (e) => {
+    // Cerrar modales al hacer clic fuera
+    if (e.target.id === 'modal-overlay') {
+        modalManager.cerrarModalCarrito();
+        modalManager.cerrarModalPerfil();
+    }
+});
+
+// Funciones globales para HTML
+window.abrirModalCarrito = () => modalManager.abrirModalCarrito();
+window.abrirModalPerfil = () => modalManager.abrirModalPerfil();
+window.cerrarModalCarrito = () => modalManager.cerrarModalCarrito();
+window.cerrarModalPerfil = () => modalManager.cerrarModalPerfil();
+window.crearPedido = () => datosCliente.crearPedido();

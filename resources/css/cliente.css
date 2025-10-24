@@ -1,0 +1,348 @@
+/* resources/css/cliente.css */
+
+/* 🎯 VARIABLES CLIENTE */
+:root {
+  --cliente-primary: #a05fa5;
+  --cliente-secondary: #cdafe3;
+  --cliente-accent: #3b2a7d;
+  --cliente-bg: #fdf6f9;
+  --cliente-card: #ffffff;
+  --cliente-text: #333333;
+  --cliente-success: #4CAF50;
+  --cliente-warning: #ff9800;
+  --cliente-error: #f44336;
+}
+
+/* 🏠 ESTRUCTURA PRINCIPAL */
+.dashboard-cliente {
+  min-height: 100vh;
+  background: var(--cliente-bg);
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* 👋 HEADER CLIENTE */
+.cliente-header {
+  background: linear-gradient(135deg, var(--cliente-secondary), var(--cliente-primary));
+  padding: 2rem 0;
+  margin-bottom: 2rem;
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+}
+
+.welcome-message h1 {
+  margin: 0 0 0.5rem 0;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.welcome-message p {
+  margin: 0;
+  opacity: 0.9;
+}
+
+.header-actions {
+  display: flex;
+  gap: 1rem;
+}
+
+.btn-perfil, .btn-carrito {
+  background: rgba(255,255,255,0.2);
+  border: 2px solid rgba(255,255,255,0.3);
+  color: white;
+  padding: 0.7rem 1.5rem;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+}
+
+.btn-carrito {
+  position: relative;
+  padding: 0.7rem;
+}
+
+.carrito-count {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: var(--cliente-error);
+  color: white;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-perfil:hover, .btn-carrito:hover {
+  background: rgba(255,255,255,0.3);
+  transform: translateY(-2px);
+}
+
+/* 📊 RESUMEN RÁPIDO */
+.resumen-section {
+  margin-bottom: 3rem;
+}
+
+.resumen-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.resumen-card {
+  background: var(--cliente-card);
+  padding: 2rem;
+  border-radius: 20px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.resumen-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(160, 95, 165, 0.15);
+}
+
+.resumen-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+}
+
+.resumen-icon.pedidos { background: #e3f2fd; color: #1976d2; }
+.resumen-icon.carrito { background: #f3e5f5; color: #7b1fa2; }
+.resumen-icon.productos { background: #fff8e1; color: #ffa000; }
+
+.resumen-info h3 {
+  margin: 0 0 0.3rem 0;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--cliente-text);
+}
+
+.resumen-info p {
+  margin: 0;
+  color: #666;
+  font-weight: 500;
+}
+
+/* 📦 SECCIONES GENERALES */
+.pedidos-section, .productos-section {
+  margin-bottom: 3rem;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.section-header h2 {
+  margin: 0;
+  color: var(--cliente-accent);
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+.btn-ver-todo {
+  background: var(--cliente-primary);
+  color: white;
+  border: none;
+  padding: 0.7rem 1.5rem;
+  border-radius: 25px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-ver-todo:hover {
+  background: var(--cliente-accent);
+  transform: translateY(-2px);
+}
+
+/* 🛍️ PRODUCTOS GRID */
+.productos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 2rem;
+}
+
+.producto-card {
+  background: var(--cliente-card);
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+}
+
+.producto-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(160, 95, 165, 0.15);
+}
+
+.producto-imagen {
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+}
+
+.producto-imagen img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.producto-card:hover .producto-imagen img {
+  transform: scale(1.05);
+}
+
+.producto-info {
+  padding: 1.5rem;
+}
+
+.producto-nombre {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0 0 0.5rem 0;
+  color: var(--cliente-text);
+}
+
+.producto-precio {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--cliente-primary);
+  margin: 0 0 0.5rem 0;
+}
+
+.producto-stock {
+  font-size: 0.9rem;
+  color: #666;
+  margin: 0 0 1rem 0;
+}
+
+.btn-agregar-carrito {
+  width: 100%;
+  background: var(--cliente-primary);
+  color: white;
+  border: none;
+  padding: 0.8rem;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-agregar-carrito:hover {
+  background: var(--cliente-accent);
+}
+
+.btn-agregar-carrito:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+/* 📦 PEDIDOS */
+.pedidos-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.pedido-card {
+  background: var(--cliente-card);
+  padding: 1.5rem;
+  border-radius: 15px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  border-left: 4px solid var(--cliente-primary);
+}
+
+.pedido-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.pedido-id {
+  font-weight: 600;
+  color: var(--cliente-text);
+}
+
+.estado-badge {
+  padding: 0.3rem 0.8rem;
+  border-radius: 15px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.estado-pendiente { background: #fff3e0; color: #f57c00; }
+.estado-confirmado { background: #e8f5e8; color: var(--cliente-success); }
+.estado-en_camino { background: #e3f2fd; color: #1976d2; }
+.estado-entregado { background: #f3e5f5; color: var(--cliente-primary); }
+
+.pedido-total {
+  font-weight: 600;
+  color: var(--cliente-text);
+}
+
+/* 📱 RESPONSIVE */
+@media (max-width: 768px) {
+  .header-content {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
+  
+  .resumen-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .productos-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .section-header {
+    flex-direction: column;
+    gap: 1rem;
+  }
+}
+
+/* 🎯 ESTADOS */
+.loading {
+  text-align: center;
+  padding: 3rem;
+  color: #666;
+  grid-column: 1 / -1;
+}
+
+.sin-datos {
+  text-align: center;
+  padding: 3rem;
+  color: #666;
+  grid-column: 1 / -1;
+}

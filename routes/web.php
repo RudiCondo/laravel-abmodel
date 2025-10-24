@@ -6,9 +6,6 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 | Web Routes
 |--------------------------------------------------------------------------
-| Aquí defines las rutas web de tu aplicación.
-| Todas están dentro del grupo de middleware "web".
-|--------------------------------------------------------------------------
 */
 
 // 🏠 Pantalla principal pública
@@ -26,14 +23,17 @@ Route::view('/categorias', 'pages.categorias');
 // 👤 Perfil del usuario
 Route::view('/perfil', 'pages.perfil');
 
-// 🔐 Login (corregido con nombre)
+// 🔐 Login
 Route::view('/login', 'pages.login')->name('login');
 
-// 🌸 Pantalla cliente (protegida por frontend con JWT)
+// 🌸 Pantalla cliente
 Route::view('/cliente/dashboard', 'pages.cliente');
 
-// 🧿 Pantalla emprendedor (también protegida por frontend con JWT)
+// 🧿 Pantalla emprendedor
 Route::view('/emprendedor/dashboard', 'pages.emprendedor');
 
-Route::get('productos/mis', [ProductoController::class, 'misProductos']);
-
+// Agrega esta línea en tus rutas:
+Route::post('/logout', function () {
+    Auth::logout();
+    return redirect('/');
+})->name('logout');
