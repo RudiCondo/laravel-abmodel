@@ -11,16 +11,16 @@
     </div>
     <div class="categorias">
       <a href="/categorias/1" class="categoria-icon">
-        <img src="{{ Vite::asset('resources/img/maquillaje.png') }}" alt="Maquillaje">
+        <img src="{{ Vite::asset('assets/img/maquillaje.png') }}" alt="Maquillaje">
       </a>
       <a href="/categorias/2" class="categoria-icon">
-        <img src="{{ Vite::asset('resources/img/skincare.png') }}" alt="Skincare">
+        <img src="{{ Vite::asset('assets/img/skincare.png') }}" alt="Skincare">
       </a>
       <a href="/categorias/3" class="categoria-icon">
-        <img src="{{ Vite::asset('resources/img/fragancias.png') }}" alt="Fragancias">
+        <img src="{{ Vite::asset('assets/img/fragancias.png') }}" alt="Fragancias">
       </a>
       <a href="/categorias/4" class="categoria-icon">
-        <img src="{{ Vite::asset('resources/img/accesorios.png') }}" alt="Accesorios">
+        <img src="{{ Vite::asset('assets/img/accesorios.png') }}" alt="Accesorios">
       </a>
     </div>
   </section>
