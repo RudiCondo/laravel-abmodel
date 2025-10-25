@@ -3,7 +3,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>@yield('title', 'ABMODEL')</title>
 
-  @vite(['resources/css/style.css', 'resources/js/auth.js'])
+  @vite(['resources/css/style.css', 'resources/js/modal-auth.js'])
 
   <link rel="icon" href="{{ Vite::asset('resources/img/favicon.png') }}" type="image/png">
 </head>
