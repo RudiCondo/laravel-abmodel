@@ -7,7 +7,7 @@
   <!-- 🌸 Hero de bienvenida -->
   <section class="categorias-belleza">
     <div class="saludo">
-      <h1>Hola ¿qué verás hoy?</h1>
+      <h1>Hola, ¿qué verás hoy?</h1>
     </div>
     <div class="categorias">
       <a href="/categorias/1" class="categoria-icon">
