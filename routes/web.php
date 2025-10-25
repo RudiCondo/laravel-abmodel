@@ -6,15 +6,34 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 | Web Routes
 |--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
+| Aquí defines las rutas web de tu aplicación.
+| Todas están dentro del grupo de middleware "web".
+|--------------------------------------------------------------------------
 */
 
-Route::view('/', 'index')->name('index');
-Route::view('/about', 'about')->name('about');
-Route::view('/contacta-con-nosotros', 'contact')->name('contact');
-Route::view('/services-contenido', 'services')->name('services');
+// 🏠 Pantalla principal pública
+Route::view('/', 'pages.home');
+
+// 🛍 Tiendas
+Route::view('/tiendas', 'pages.tiendas');
+
+// 🧴 Productos
+Route::view('/productos', 'pages.productos');
+
+// 🗂 Categorías
+Route::view('/categorias', 'pages.categorias');
+
+// 👤 Perfil del usuario
+Route::view('/perfil', 'pages.perfil');
+
+// 🔐 Login (corregido con nombre)
+Route::view('/login', 'pages.login')->name('login');
+
+// 🌸 Pantalla cliente (protegida por frontend con JWT)
+Route::view('/cliente/dashboard', 'pages.cliente');
+
+// 🧿 Pantalla emprendedor (también protegida por frontend con JWT)
+Route::view('/emprendedor/dashboard', 'pages.emprendedor');
+
+Route::get('productos/mis', [ProductoController::class, 'misProductos']);
 
