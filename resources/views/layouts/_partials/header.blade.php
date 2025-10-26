@@ -1,6 +1,6 @@
 <header class="header-completo">
   <div class="header-izquierda">
-    <img src="{{ Vite::asset('resources/img/Logo.jpg') }}" alt="ABMODEL" class="logo">
+    <img src="{{ Vite::asset('img/Logo.jpg') }}" alt="ABMODEL" class="logo">
   </div>
 
   <div class="header-centro">
