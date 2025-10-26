@@ -23,9 +23,6 @@ Route::view('/categorias', 'pages.categorias');
 // 👤 Perfil del usuario
 Route::view('/perfil', 'pages.perfil');
 
-// 🔐 Login
-Route::view('/login', 'pages.login')->name('login');
-
 // 🌸 Pantalla cliente
 Route::view('/cliente/dashboard', 'pages.cliente');
 
@@ -37,3 +34,4 @@ Route::post('/logout', function () {
     Auth::logout();
     return redirect('/');
 })->name('logout');
+

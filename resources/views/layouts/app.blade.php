@@ -6,8 +6,12 @@
   </head>
 
   <body>
-    @include('layouts._partials.header')
-   
+    {{-- CONDICIÓN PARA HEADER CLIENTE --}}
+    @if($esCliente ?? false)
+      @include('layouts._partials.header-cliente')
+    @else
+      @include('layouts._partials.header')
+    @endif
 
     <main>
       @yield('content')

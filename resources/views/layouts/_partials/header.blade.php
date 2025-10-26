@@ -16,7 +16,5 @@
       </button>
     @endif
 
-    <span class="icono-usuario hidden">👤</span>
-    <span class="usuario-logueado hidden"></span>
   </div>
 </header>
