@@ -5,5 +5,5 @@
 
   @vite(['resources/css/style.css', 'resources/js/modal-auth.js'])
 
-  <link rel="icon" href="{{ Vite::asset('img/Logo.jpg') }}" type="image/png">
+  <link rel="icon" href="{{ asset('img/Logo.jpg') }}" type="image/jpeg">
 </head>
