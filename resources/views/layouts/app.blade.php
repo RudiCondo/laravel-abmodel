@@ -2,7 +2,7 @@
 <html lang="es">
   <head>
     @include('layouts._partials.head')
-    @vite(['css/style.css', 'resources/js/modal-auth.js'])
+    @vite(['resources/css/style.css', 'resources/js/modal-auth.js'])
   </head>
 
   <body>
