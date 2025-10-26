@@ -2,7 +2,9 @@
 <html lang="es">
   <head>
     @include('layouts._partials.head')
-    @vite(['resources/css/style.css', 'resources/js/modal-auth.js'])
+    
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+  <script src="{{ asset('js/modal-auth.js') }}" defer></script>
   </head>
 
   <body>
