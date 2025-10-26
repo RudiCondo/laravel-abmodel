@@ -3,9 +3,8 @@
   <head>
     @include('layouts._partials.head')
     
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
- 
-  @vite(['resources/js/modal-auth.js'])
+    
+  @vite(['resources/css/style.css', 'resources/js/modal-auth.js'])
   </head>
 
   <body>
