@@ -28,12 +28,18 @@ class ChatController extends Controller
             // 2️⃣ Obtener el mensaje del cliente
             $mensaje = $request->input('mensaje', 'Hola, ¿qué tal?');
 
-            // 3️⃣ Buscar productos que coincidan con el mensaje (por nombre o descripción)
+            // 3️⃣ Buscar productos que coincidan con alguna palabra del mensaje
+            $palabras = preg_split('/\s+/', $mensaje);
+
             $productos = Producto::with('tienda', 'categoria')
-                ->where('nombre_producto', 'like', "%$mensaje%")
-                ->orWhere('descripcion', 'like', "%$mensaje%")
+                ->where(function($query) use ($palabras) {
+                    foreach ($palabras as $palabra) {
+                        $query->orWhere('nombre_producto', 'like', "%$palabra%")
+                              ->orWhere('descripcion', 'like', "%$palabra%");
+                    }
+                })
                 ->take(5)
-                ->get(['id_producto', 'nombre_producto', 'descripcion', 'precio', 'stock', 'imagen_url', 'id_tienda', 'id_categoria']);
+                ->get(['id_producto','nombre_producto','descripcion','precio','stock','imagen_url','id_tienda','id_categoria']);
 
             // 4️⃣ Crear el contexto para Gemini
             if ($productos->isEmpty()) {
