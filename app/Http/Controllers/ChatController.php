@@ -9,6 +9,7 @@ use App\Models\Producto;
 use App\Models\Categoria;
 use App\Models\Comentario;
 use App\Models\Tienda;
+use Illuminate\Support\Facades\DB;
 
 class ChatController extends Controller
 {
@@ -25,17 +26,22 @@ class ChatController extends Controller
                 ], 403);
             }
 
-            // 2️⃣ Obtener el mensaje del cliente
-            $mensaje = $request->input('mensaje', 'Hola, ¿qué tal?');
-
-            // 3️⃣ Buscar productos que coincidan con alguna palabra del mensaje
+            // 2️⃣ Obtener y limpiar el mensaje del cliente
+            $mensaje = strtolower($request->input('mensaje', 'Hola, ¿qué tal?'));
+            $mensaje = preg_replace('/[^\p{L}\p{N}\s]/u', '', $mensaje); // quitar signos y tildes raros
             $palabras = preg_split('/\s+/', $mensaje);
 
+            // 3️⃣ Buscar productos que coincidan por nombre, descripción o categoría
             $productos = Producto::with('tienda', 'categoria')
                 ->where(function($query) use ($palabras) {
                     foreach ($palabras as $palabra) {
-                        $query->orWhere('nombre_producto', 'like', "%$palabra%")
-                              ->orWhere('descripcion', 'like', "%$palabra%");
+                        $raiz = rtrim($palabra, 's'); // para que "perfumes" encuentre "perfume"
+                        $query->orWhereRaw('LOWER(nombre_producto) LIKE ?', ["%$raiz%"])
+                              ->orWhereRaw('LOWER(descripcion) LIKE ?', ["%$raiz%"])
+                              ->orWhereHas('categoria', function ($sub) use ($raiz) {
+                                  $sub->whereRaw('LOWER(nombre_categoria) LIKE ?', ["%$raiz%"])
+                                      ->orWhereRaw('LOWER(descripcion) LIKE ?', ["%$raiz%"]);
+                              });
                     }
                 })
                 ->take(5)
